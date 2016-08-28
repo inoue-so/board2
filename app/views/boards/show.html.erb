@@ -1,0 +1,27 @@
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @board.user.email %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @board.name %>
+</p>
+
+<%= form_for  [@board,@message], html: { multipart: true } do |f|%>
+<%= f.text_area :content %>
+ <%= f.file_field :picture %>
+<%= f.submit %>
+<% end %>
+
+<% @board.messages.each do |m|%>
+  <p><%= m.content %></p>
+  <%= image_tag m.picture.url if m.picture? %>
+  <p><%=  m.user.email if m.user %></p>
+  <p><%= m.created_at %></p>
+  <% end %>
+<%= link_to 'Edit', edit_board_path(@board) %> |
+<%= link_to 'Back', boards_path %>
